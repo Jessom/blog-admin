@@ -52,15 +52,9 @@ export default {
     }
   },
   mounted() {
-    const canvas = document.querySelector('#canvas')
-    this.can = canvas.getContext('2d')
-    const s = window.screen
-    let wid = canvas.width = s.width
-    let hei = canvas.height = s.height
-    this.can.fillStyle = this.color()
-		this.words = Array(256).join('1').split('')
+    this.animateInif()
 		setInterval(() => {
-      this.draw(wid, hei)
+      this.draw(this.wid, this.hei)
     }, 50)
   },
   methods: {
@@ -73,6 +67,15 @@ export default {
           return false
         }
       })
+    },
+    animateInif() {
+      const canvas = document.querySelector('#canvas')
+      this.can = canvas.getContext('2d')
+      const s = window.screen
+      this.wid = canvas.width = s.width
+      this.hei = canvas.height = s.height
+      this.can.fillStyle = this.color()
+      this.words = Array(256).join('1').split('')
     },
     draw(w, h) {
       this.can.fillStyle = 'rgba(0, 0, 0, 0.05)'
@@ -98,14 +101,8 @@ export default {
 
 <style lang="scss">
 @import 'static/scss/_variable.scss';
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  .login-wrap {
-    background-color: #22292C;
-  }
+.login-wrap {
+  background-color: #22292C;
 }
 .login-form-wrap {
   position: absolute;

@@ -6,8 +6,8 @@ Vue.use(Router)
 export default new Router({
   routes: [{
     path: '/',
-    name: 'HelloWorld',
-    component: () => import('@/components/HelloWorld.vue')
+    name: 'index',
+    component: () => import('@/pages/Index.vue')
   }, {
     path: '/login',
     name: 'login',
