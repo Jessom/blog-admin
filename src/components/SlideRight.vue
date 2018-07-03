@@ -22,17 +22,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      isCollapse: true,
       active: '/index'
     }
+  },
+  computed: {
+    ...mapState({
+      isCollapse: state => state.mutations.slideRightCollapse
+    })
   },
   methods: {
     handleSelect(key, keyPath) {
       if(key === '#') {
-        this.isCollapse = !this.isCollapse
+        this.$store.commit('SET_STATE', {key: 'slideRightCollapse', val: !this.isCollapse})
       }
     }
   }
@@ -41,7 +46,11 @@ export default {
 
 <style lang="scss">
 .el-menu-vertical-demo {
+  display: inline-block;
+  vertical-align: top;
   height: calc(100% - 60px);
+  border-right: 0;
+  transition: none !important;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;

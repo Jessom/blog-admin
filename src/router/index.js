@@ -7,7 +7,13 @@ export default new Router({
   routes: [{
     path: '/',
     name: 'index',
-    component: () => import('@/pages/Index.vue')
+    redirect: 'dashboard',
+    component: () => import('@/pages/Index.vue'),
+    children: [{
+      path: 'dashboard',
+      name: 'dashboard',
+      component: () => import('@/pages/Dashboard.vue')
+    }]
   }, {
     path: '/login',
     name: 'login',

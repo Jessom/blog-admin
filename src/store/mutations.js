@@ -1,12 +1,13 @@
 import * as types from './types'
 
 const state = {
-  loading: false
+  loading: false,
+  slideRightCollapse: true
 }
 
 const mutations = {
   [types.SET_STATE](state, options) {
-    state.loading = options
+    state[options.key] = options.val
   }
 }
 
