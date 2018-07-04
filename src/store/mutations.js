@@ -2,7 +2,8 @@ import * as types from './types'
 
 const state = {
   loading: false,
-  slideRightCollapse: true
+  slideRightCollapse: true,
+  curPath: '/dashboard'
 }
 
 const mutations = {

@@ -2,7 +2,10 @@
   <div class="container">
     <topbar />
     <slide-right /><div class="router-wrap" :class='{"collapse": !slideRightCollapse}'>
-      <router-view></router-view>
+      <navbar />
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -10,6 +13,7 @@
 <script>
 import SlideRight from '@/components/SlideRight.vue'
 import Topbar from '@/components/Topbar.vue'
+import Navbar from '@/components/Navbar.vue'
 import { mapState } from 'vuex'
 export default {
   computed: {
@@ -19,7 +23,8 @@ export default {
   },
   components: {
     SlideRight,
-    Topbar
+    Topbar,
+    Navbar
   }
 }
 </script>

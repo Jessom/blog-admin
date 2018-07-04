@@ -39,9 +39,6 @@ export default {
       return { charData, extend, settings }
     }
   },
-  mounted() {
-    console.log(this.opt)
-  },
   methods: {
     // 设置图标数据
     setCharData() {

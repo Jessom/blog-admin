@@ -2,7 +2,7 @@
   <el-menu
     class="top-bar-wrap"
     :default-active="activeIndex"
-    background-color="#545c64"
+    background-color="#333744"
     text-color="#fff"
     active-text-color="#ffd04b"
     mode="horizontal"
