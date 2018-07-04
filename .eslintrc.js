@@ -29,6 +29,8 @@ module.exports = {
     'no-tabs': 0,
     'space-before-function-paren': 0,
     'keyword-spacing': 0,
-    'no-useless-escape': 0
+    'no-useless-escape': 0,
+    'no-return-assign': 0,
+    'no-unneeded-ternary': 0
   }
 }

@@ -1,0 +1,17 @@
+@import './_variable.scss';
+
+.green { color: $green; }
+.blue { color: $blue; }
+.grey { color: $grey; }
+.success { color: $success; }
+.warning { color: $warning; }
+.danger { color: $danger; }
+.info { color: $info; }
+
+.white-bg { background-color: #fff; }
+
+.radius50 { border-radius: 50%; }
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }

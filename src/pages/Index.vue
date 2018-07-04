@@ -27,11 +27,13 @@ export default {
 <style lang="scss">
 .container { height: 100%; }
 .router-wrap {
-  padding: 15px 15px 0 15px;
+  padding: 20px;
   display: inline-block;
-  width: calc(100% - 95px);
+  width: calc(100% - 105px);
+  height: calc(100% - 100px);
+  overflow-y: auto;
   &.collapse {
-    width: calc(100% - 230px);
+    width: calc(100% - 240px);
   }
 }
 </style>
