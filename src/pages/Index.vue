@@ -3,9 +3,11 @@
     <topbar />
     <slide-right /><div class="router-wrap" :class='{"collapse": !slideRightCollapse}'>
       <navbar />
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <el-collapse-transition>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </el-collapse-transition>
     </div>
   </div>
 </template>

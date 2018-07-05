@@ -15,20 +15,16 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'navbar',
-  data () {
-    return {
-      list: []
-    }
-  },
   watch: {
     '$route': function(to, form) {
       document.title = to.meta.title
       this.active = to.path
       if(this.list.findIndex(c => c.path === to.path) <= -1) {
-        this.list.push({ title: to.meta.title, path: to.path })
+        this.$store.commit('SET_NAVLIST', { title: to.meta.title, path: to.path })
+        // this.list.push({ title: to.meta.title, path: to.path })
       }
     }
   },
@@ -38,7 +34,10 @@ export default {
         return this.$store.state.mutations.curPath
       },
       set: function() {}
-    }
+    },
+    ...mapState({
+      list: state => state.mutations.navlist
+    })
   },
   methods: {
     // 删除某一项
@@ -50,9 +49,6 @@ export default {
     onNavtab(e, item) {
       this.$router.push({ path: item.path })
     }
-  },
-  created() {
-    this.list.push({ title: this.$route.meta.title, path: this.$route.path })
   }
 }
 </script>

@@ -24,6 +24,7 @@
         <el-button
           class='submit-btn'
           type="primary"
+          :loading="login"
           @click="submitForm('loginForm')">提交</el-button>
       </el-form-item>
     </el-form>
@@ -35,6 +36,7 @@ import regex from '@/utils/regex'
 export default {
   data () {
     return {
+      login: false,
       loginForm: {
         account: '',
         password: ''

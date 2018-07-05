@@ -15,3 +15,26 @@
 .text-center { text-align: center; }
 .text-right { text-align: right; }
 .text-left { text-align: left; }
+
+.size12 { font-size: 12px; }
+.size14 { font-size: 14px; }
+.size16 { font-size: 16px; }
+.size18 { font-size: 18px; }
+.size20 { font-size: 20px; }
+.size22 { font-size: 22px; }
+.size24 { font-size: 24px; }
+.size26 { font-size: 26px; }
+.size28 { font-size: 28px; }
+.size30 { font-size: 30px; }
+
+.mt10 { margin-top: 10px; }
+.mt15 { margin-top: 15px; }
+.mt20 { margin-top: 20px; }
+.mr10 { margin-right: 10px; }
+
+.flex { display: flex; }
+.space-between {
+  @extend .flex;
+  justify-content: space-between;
+  align-items: center;
+}

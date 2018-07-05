@@ -5,10 +5,13 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import VueProgressBar from 'vue-progressbar'
+import { PROGRESS_CONF } from './config'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
 
 Vue.use(ElementUI)
+Vue.use(VueProgressBar, PROGRESS_CONF)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
