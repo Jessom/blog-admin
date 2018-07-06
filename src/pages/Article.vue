@@ -2,7 +2,10 @@
   <div class="article-wrap">
     <el-row :gutter='12'>
       <el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18">
-        <slide-com title='文章列表'>
+        <slide-com
+          title='文章列表'
+          :showSearch='true'
+          @entry='onEntry'>
           <el-table
           :data="tableData"
           style="width: 100%">
@@ -58,6 +61,8 @@
         <slide-com title='操作'>
           <hand
             :screen='screen'
+            :select='select'
+            :date='date'
             :btns='btns' />
         </slide-com>
         <slide-com class="mt10" title='统计'>
@@ -85,6 +90,8 @@ import Hand from '@/components/common/Hand.vue'
 export default {
   data () {
     return {
+      select: '',
+      date: '',
       btns: [{
         label: '添加',
         type: 'primary',
@@ -131,6 +138,11 @@ export default {
         firstTime: '2018-07-05 20:13',
         lastTime: '2018-07-05 20:13'
       }]
+    }
+  },
+  methods: {
+    onEntry(val) {
+      console.log(val)
     }
   },
   components: {

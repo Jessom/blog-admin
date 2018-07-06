@@ -1,6 +1,16 @@
 <template>
   <div class="slide-wrap">
-    <h4 class="title" v-if='title'>{{title}}</h4>
+    <div class="slide-head space-between">
+      <span class="title">{{title}}</span>
+      <el-input
+        placeholder="请输入内容"
+        size='small'
+        @keyup.13.native="$emit('entry', search)"
+        v-if='showSearch'
+        suffix-icon="el-icon-search"
+        v-model="search">
+      </el-input>
+    </div>
     <div class="content">
       <slot></slot>
     </div>
@@ -9,8 +19,17 @@
 
 <script>
 export default {
+  data () {
+    return {
+      search: ''
+    }
+  },
   props: {
-    title: String
+    title: String,
+    showSearch: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>
@@ -18,18 +37,18 @@ export default {
 <style lang="scss">
 .slide-wrap {
   background-color: #fff;
-  .title, .content {
+  .slide-head {
     padding: 10px;
-  }
-  .title {
-    font-weight: normal;
-    margin: 0;
     background-color: #f6f6f6;
-    color: #444;
-    font-size: 13px;
     border-radius: 3px 3px 0 0;
+    .el-input { width: 180px; }
+    .title {
+      color: #444;
+      font-size: 14px;
+    }
   }
   .content {
+    padding: 10px;
     border-radius: 0 0 3px 3px;
   }
 }

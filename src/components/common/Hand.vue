@@ -11,7 +11,7 @@
     </div>
     <!-- 筛选 -->
     <div class="mt10" v-if='screen.length'>
-      <el-select v-model="option" clearable placeholder="请选择">
+      <el-select v-model="select" clearable placeholder="请选择">
         <el-option
           v-for="item in screen"
           :key="item.value"
@@ -21,9 +21,9 @@
       </el-select>
     </div>
     <!-- 日期选择 -->
-    <div class="mt10">
+    <div class="mt10" v-if='showDate'>
       <el-date-picker
-        v-model="data"
+        v-model="date"
         type="daterange"
         range-separator="-"
         start-placeholder="开始日期"
@@ -35,12 +35,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      option: '',
-      data: ''
-    }
-  },
   props: {
     btns: {
       type: Array,
@@ -53,7 +47,13 @@ export default {
     screen: {
       type: Array,
       default: function() { return [] }
-    }
+    },
+    select: String,
+    showDate: {
+      type: Boolean,
+      default: true
+    },
+    date: String
   }
 }
 </script>
