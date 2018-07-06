@@ -4,7 +4,8 @@ const state = {
   loading: false,
   slideRightCollapse: true,
   curPath: '/dashboard',
-  navlist: []
+  navlist: [],
+  token: ''
 }
 
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
   },
   [types.SET_NAVLIST](state, val) {
     state.navlist.push(val)
+  },
+  [types.LOGOUT](state) {
+    state.token = ''
   }
 }
 

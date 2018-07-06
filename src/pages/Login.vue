@@ -16,6 +16,7 @@
       <el-form-item prop="password">
         <el-input
           placeholder='请输入密码'
+          type='password'
           v-model="loginForm.password">
           <i slot="prefix" class="el-input__icon el-icon-date"></i>
         </el-input>
@@ -63,12 +64,21 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.loginEvent()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
+    },
+    loginEvent() {
+        this.$axios.post(`/v1/login`, {
+          account: this.loginForm.account,
+          password: this.loginForm.password
+        }).then(res => {
+          this.$store.commit('SET_STATE', { key: 'token', val: res.token })
+          let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+          this.$router.push({ path: redirect })
+        })
     },
     animateInif() {
       const canvas = document.querySelector('#canvas')
