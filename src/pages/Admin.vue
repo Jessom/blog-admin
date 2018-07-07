@@ -32,6 +32,13 @@
                   <el-form-item label="注册时间">
                     <span>{{ props.row.firstTime }}</span>
                   </el-form-item>
+                  <el-form-item label="操作">
+                    <el-button
+                      type='primary'
+                      :disabled='!props.row.status'
+                      @click='reset(props.row)'
+                      size='mini'>重置密码</el-button>
+                  </el-form-item>
                 </el-form>
               </template>
             </el-table-column>
@@ -195,6 +202,18 @@ export default {
         } else {
           return false
         }
+      })
+    },
+    // 重置密码
+    reset(item) {
+      this.$confirm(`确定要重置 ${item.name} 的密码吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return this.$axios.put('/v1/admin', { id: item._id, password: '12345678' })
+      }).then(res => {
+        this.$message({ type: 'success', message: `重置成功！密码为 12345678` })
       })
     },
     async addEvent() {
