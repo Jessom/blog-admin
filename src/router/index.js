@@ -12,13 +12,18 @@ export default new Router({
     children: [{
       path: 'dashboard',
       name: 'dashboard',
-      meta: { title: '仪表盘' },
+      meta: { title: '仪表盘 | わタし' },
       component: () => import('@/pages/Dashboard.vue')
     }, {
       path: 'article',
       name: 'article',
-      meta: { title: '文章管理' },
+      meta: { title: '文章管理 | わタし' },
       component: () => import('@/pages/Article.vue')
+    }, {
+      path: 'admin',
+      name: 'admin',
+      meta: { title: '管理员 | わタし' },
+      component: () => import('@/pages/Admin.vue')
     }]
   }, {
     path: '/login',

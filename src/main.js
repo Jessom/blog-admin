@@ -7,6 +7,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 import VueProgressBar from 'vue-progressbar'
 import axios from './utils/axios'
+import compon from './utils/component'
 import { PROGRESS_CONF } from './config'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
@@ -14,6 +15,9 @@ import 'element-ui/lib/theme-chalk/display.css'
 Vue.use(ElementUI)
 Vue.use(VueProgressBar, PROGRESS_CONF)
 Vue.prototype.$axios = axios
+Object.keys(compon).forEach(key => {
+  Vue.component(key, compon[key])
+})
 Vue.config.productionTip = false
 
 // 路由跳转，判断是否是登录状态

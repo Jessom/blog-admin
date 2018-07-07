@@ -59,25 +59,12 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <slide-com title='操作'>
-          <hand
-            :screen='screen'
-            :select='select'
+          <hand-com
             :date='date'
             :btns='btns' />
         </slide-com>
         <slide-com class="mt10" title='统计'>
-          <div class="count-item info space-between">
-            <span>共</span>
-            <span class="size24">46 <small class="size16">篇</small></span>
-          </div>
-          <div class="count-item info space-between">
-            <span>JavaScript</span>
-            <span class="size24">32 <small class="size16">篇</small></span>
-          </div>
-          <div class="count-item info space-between">
-            <span>Python</span>
-            <span class="size24">14 <small class="size16">篇</small></span>
-          </div>
+          <count-item :list='count' @click='countClick' />
         </slide-com>
       </el-col>
     </el-row>
@@ -85,12 +72,22 @@
 </template>
 
 <script>
-import SlideCom from '@/components/common/Slide.vue'
-import Hand from '@/components/common/Hand.vue'
 export default {
   data () {
     return {
-      select: '',
+      count: [{
+        label: '共',
+        value: 45,
+        unit: '篇'
+      }, {
+        label: 'JavaScript',
+        value: 32,
+        unit: '篇'
+      }, {
+        label: 'Python',
+        value: 13,
+        unit: '篇'
+      }],
       date: '',
       btns: [{
         label: '添加',
@@ -108,16 +105,6 @@ export default {
         label: '删除',
         type: 'danger',
         event: () => console.log('删除')
-      }],
-      screen: [{
-        value: '53102b43bf1044ed8b0ba36b',
-        label: 'vuejs'
-      }, {
-        value: '53102b43bf1044ed8b0ba36c',
-        label: 'nodejs'
-      }, {
-        value: '53102b43bf1044ed8b0ba36d',
-        label: 'reactjs'
       }],
       tableData: [{
         title: '前端工程师最好的全栈开发实践-设计开发属于自己的nodejs博客',
@@ -141,13 +128,14 @@ export default {
     }
   },
   methods: {
+    // 搜索框回车事件
     onEntry(val) {
       console.log(val)
+    },
+    // 右侧统计点击某一项
+    countClick(item) {
+      console.log(item)
     }
-  },
-  components: {
-    SlideCom,
-    Hand
   }
 }
 </script>

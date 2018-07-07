@@ -1,5 +1,5 @@
 @import './_variable.scss';
-
+// color
 .green { color: $green; }
 .blue { color: $blue; }
 .grey { color: $grey; }
@@ -8,14 +8,18 @@
 .danger { color: $danger; }
 .info { color: $info; }
 
+// background-color
 .white-bg { background-color: #fff; }
 
+// radius
 .radius50 { border-radius: 50%; }
 
+// text-align
 .text-center { text-align: center; }
 .text-right { text-align: right; }
 .text-left { text-align: left; }
 
+// font-size
 .size12 { font-size: 12px; }
 .size14 { font-size: 14px; }
 .size16 { font-size: 16px; }
@@ -27,14 +31,26 @@
 .size28 { font-size: 28px; }
 .size30 { font-size: 30px; }
 
+// margin
 .mt10 { margin-top: 10px; }
 .mt15 { margin-top: 15px; }
 .mt20 { margin-top: 20px; }
 .mr10 { margin-right: 10px; }
 
+// line-height
+.line8 { line-height: .8; }
+.line13 { line-height: 1.3; }
+.line15 { line-height: 1.5; }
+.line18 { line-height: 1.8; }
+.line20 { line-height: 2; }
+
+// layout
 .flex { display: flex; }
 .space-between {
   @extend .flex;
   justify-content: space-between;
   align-items: center;
 }
+
+// other
+.pointer { cursor: pointer; }

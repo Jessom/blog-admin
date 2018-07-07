@@ -11,12 +11,16 @@
       <i class="el-icon-more"></i>
     </el-menu-item>
     <el-menu-item index="/dashboard">
-      <i class="el-icon-menu"></i>
+      <i class="iconfont icon-yibiaopan"></i>
       <span slot="title">仪表盘</span>
     </el-menu-item>
     <el-menu-item index="/article">
-      <i class="el-icon-document"></i>
+      <i class="iconfont icon-wenzhang"></i>
       <span slot="title">文章管理</span>
+    </el-menu-item>
+    <el-menu-item index="/admin">
+      <i class="iconfont icon-yonghu-tianchong"></i>
+      <span slot="title">管理员</span>
     </el-menu-item>
   </el-menu>
 </template>
