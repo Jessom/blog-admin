@@ -22,6 +22,10 @@
       <i class="iconfont icon-yonghu-tianchong"></i>
       <span slot="title">管理员</span>
     </el-menu-item>
+    <el-menu-item index="/site">
+      <i class="iconfont icon-qiu"></i>
+      <span slot="title">站点设置</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

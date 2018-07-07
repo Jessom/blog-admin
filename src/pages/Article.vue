@@ -22,7 +22,7 @@
               label="类型"
               width="160">
               <template slot-scope="scope">
-                <el-tag size='small' type="success" disable-transitions>{{scope.row.type}}</el-tag>
+                <el-tag size='small' type="info" disable-transitions>{{scope.row.type}}</el-tag>
               </template>
             </el-table-column>
             <el-table-column

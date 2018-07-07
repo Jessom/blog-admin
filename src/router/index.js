@@ -24,6 +24,11 @@ export default new Router({
       name: 'admin',
       meta: { title: '管理员 | わタし' },
       component: () => import('@/pages/Admin.vue')
+    }, {
+      path: 'site',
+      name: 'site',
+      meta: { title: '站点设置 | わタし' },
+      component: () => import('@/pages/Site.vue')
     }]
   }, {
     path: '/login',

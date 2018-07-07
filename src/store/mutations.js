@@ -5,7 +5,8 @@ const state = {
   slideRightCollapse: true,
   curPath: '/dashboard',
   navlist: [],
-  token: ''
+  token: '',
+  userInfo: null
 }
 
 const mutations = {

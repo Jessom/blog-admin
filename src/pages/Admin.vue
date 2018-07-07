@@ -13,7 +13,7 @@
                     <span>{{ props.row.name }}</span>
                   </el-form-item>
                   <el-form-item label="用户 ID">
-                    <span>{{ props.row.id }}</span>
+                    <span>{{ props.row._id }}</span>
                   </el-form-item>
                   <el-form-item label="账号">
                     <span>{{ props.row.account }}</span>
@@ -77,50 +77,145 @@
         </slide-com>
       </el-col>
     </el-row>
+
+    <el-dialog title="添加管理员" width='500px' :visible.sync="dialog">
+      <el-form ref="adminForm" :rules='adminRules' :model="admin">
+        <el-form-item prop='name'>
+          <el-input
+            prefix-icon='iconfont icon-zhanghao'
+            v-model="admin.name"
+            placeholder='请输入用户名'
+            autofocus="true"></el-input>
+        </el-form-item>
+        <el-form-item prop='account'>
+          <el-input
+            prefix-icon='iconfont icon-tubiao209'
+            v-model="admin.account"
+            placeholder='请输入账号（邮箱地址）'
+            type='email'></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            prefix-icon='iconfont icon-shouji'
+            placeholder='请输入联系方式（手机号）'
+            v-model="admin.mobile"
+            type='tel'></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            prefix-icon='iconfont icon-mima'
+            v-model="admin.password"
+            placeholder='请输入密码'
+            type='password'></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click='addAdmin("adminForm")'>确定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import regex from '@/utils/regex'
+import { filterTime } from '@/utils/filter'
 export default {
   data () {
     return {
+      adminRules: {
+        name: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+        ],
+        account: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+          { pattern: regex.email, message: '邮箱格式不合法', trigger: 'blur' }
+        ],
+        mobile: [
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { pattern: regex.mobile, message: '手机号格式不合法', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { pattern: regex.password, message: '密码格式不正确', trigger: 'blur' }
+        ]
+      },
+      admin: {
+        name: '',
+        account: '',
+        mobile: '',
+        password: ''
+      },
+      dialog: false,
       btns: [{
         label: '添加管理员',
         type: 'primary',
-        event: () => console.log('添加')
+        event: () => this.dialog = true
       }],
-      count: [{
-        label: '共',
-        value: 5,
-        unit: '人'
-      }],
-      adminer: [{
-        name: 'わタし',
-        account: 'jessoncheung@gmail.com',
-        lastTime: '2018-07-07 10:56',
-        id: '53102b43bf1044ed8b0ba36b',
-        firstTime: '2018-07-05 20:03',
-        mobile: '153718298**',
-        status: true
-      }, {
-        name: 'admin',
-        account: '857477061@qq.com',
-        lastTime: '2018-07-06 22:34',
-        id: '53102b43bf1044ed8b0ba36c',
-        firstTime: '2018-07-05 20:04',
-        mobile: '159****3014',
-        status: false
-      }]
+      count: [],
+      adminer: []
     }
+  },
+  created () {
+    this.getdata(0)
   },
   methods: {
     // 删除
     del(item) {
-      console.log(item)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return this.$axios.delete(`/v1/admin/${item._id}`)
+      }).then((res) => {
+        this.adminer.splice(this.adminer.findIndex(c => c._id === item._id), 1)
+        this.$message({ type: 'success', message: '删除成功!' })
+      })
     },
     // 启用 / 禁用
     able(item) {
-      console.log(item)
+      let tip = item.status ? '禁用' : '启用'
+      this.$confirm(`确定要${tip}该管理员`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: item.status ? 'warning' : 'success'
+      }).then(() => {
+        return this.$axios.put('/v1/admin', { id: item._id, status: !item.status })
+      }).then(res => {
+        item.status = !item.status
+        this.$message({ type: 'success', message: `${tip}成功！` })
+      })
+    },
+    // 添加管理员
+    addAdmin(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.addEvent()
+        } else {
+          return false
+        }
+      })
+    },
+    async addEvent() {
+      try {
+        const res = await this.$axios.post('/v1/admin', this.admin)
+        this.$message({ message: res.msg, type: 'success' })
+        this.adminer.unshift(res)
+        this.dialog = false
+      } catch (error) {}
+    },
+    // 请求数据
+    async getdata(page) {
+      try {
+        const res = await this.$axios.get(`/v1/admin?page=${page}`)
+        this.count = [{ label: '共', value: res.count, unit: '人' }]
+        this.adminer = res.list.map(c => {
+          c.firstTime = filterTime(c.firstTime, 'yyyy-MM-dd hh:mm')
+          c.lastTime = filterTime(c.lastTime, 'yyyy-MM-dd hh:mm')
+          return c
+        })
+      } catch (error) {}
     }
   }
 }

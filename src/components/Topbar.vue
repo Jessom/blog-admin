@@ -1,7 +1,6 @@
 <template>
   <el-menu
     class="top-bar-wrap"
-    :default-active="activeIndex"
     background-color="#333744"
     text-color="#fff"
     active-text-color="#ffd04b"
@@ -14,7 +13,7 @@
     <el-submenu class="user-wrap" index="/index">
       <template slot="title">
         <img class="avatar" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3154777717,3742877994&fm=27&gp=0.jpg" alt="">
-        わタし
+        {{userInfo.name}}
       </template>
       <el-menu-item index="2-1">个人资料</el-menu-item>
       <el-menu-item index="2-1">设置</el-menu-item>
@@ -24,12 +23,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'topbar',
-  data () {
-    return {
-      activeIndex: '1'
-    }
+  computed: {
+    ...mapState({
+      userInfo: state => state.mutations.userInfo
+    })
   },
   methods: {
     handleSelect(key, keyPath) {

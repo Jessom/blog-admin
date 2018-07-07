@@ -25,7 +25,6 @@
         <el-button
           class='submit-btn'
           type="primary"
-          :loading="login"
           @click="submitForm('loginForm')">提交</el-button>
       </el-form-item>
     </el-form>
@@ -37,7 +36,6 @@ import regex from '@/utils/regex'
 export default {
   data () {
     return {
-      login: false,
       loginForm: {
         account: '',
         password: ''
@@ -62,6 +60,7 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      this.$store.commit('LOGOUT')
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loginEvent()
@@ -76,6 +75,12 @@ export default {
           password: this.loginForm.password
         }).then(res => {
           this.$store.commit('SET_STATE', { key: 'token', val: res.token })
+          this.$store.commit('SET_STATE', { key: 'userInfo', val: res })
+          this.$notify({
+            title: `${res.name}`,
+            message: '欢迎欢迎，热烈欢迎',
+            type: 'success'
+          })
           let redirect = decodeURIComponent(this.$route.query.redirect || '/')
           this.$router.push({ path: redirect })
         })
