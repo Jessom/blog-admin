@@ -35,5 +35,9 @@ export default new Router({
     name: 'login',
     meta: { title: '登录' },
     component: () => import('@/pages/Login.vue')
+  }, {
+    path: '/test',
+    name: 'test',
+    component: () => import('@/pages/test.vue')
   }]
 })
