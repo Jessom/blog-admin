@@ -22,7 +22,10 @@
               label="类型"
               width="160">
               <template slot-scope="scope">
-                <el-tag size='small' type="info" disable-transitions>{{scope.row.type}}</el-tag>
+                <el-tag
+                  size='small'
+                  :type='scope.row.type==0?"success":(scope.row.type==1?"warning":"danger")'>
+                  {{scope.row.type==0?"原创":(scope.row.type==1?"转载":"翻译")}}</el-tag>
               </template>
             </el-table-column>
             <el-table-column
@@ -72,6 +75,7 @@
 </template>
 
 <script>
+import { filterTime } from '@/utils/filter'
 export default {
   data () {
     return {
@@ -106,28 +110,23 @@ export default {
         type: 'danger',
         event: () => console.log('删除')
       }],
-      tableData: [{
-        title: '前端工程师最好的全栈开发实践-设计开发属于自己的nodejs博客',
-        type: 'NodeJS',
-        status: true,
-        firstTime: '2018-07-05 20:13',
-        lastTime: '2018-07-05 20:13'
-      }, {
-        title: '请问 ！阿里云OSS  nodejs版服务端签名直传并设置上传回调 有谁做过吗？',
-        type: 'NodeJS',
-        status: true,
-        firstTime: '2018-07-05 20:13',
-        lastTime: '2018-07-05 20:13'
-      }, {
-        title: '自己用Nodejs+es6语法+单例模式 封装的数据库类库 可用于,Express、 Koa、  原生nodejs操作MongoDb数据库的类库【用法简单】',
-        type: 'NodeJS',
-        status: false,
-        firstTime: '2018-07-05 20:13',
-        lastTime: '2018-07-05 20:13'
-      }]
+      tableData: []
     }
   },
+  created () {
+    this.getData(0)
+  },
   methods: {
+    getData(page) {
+      this.$axios.get(`/v1/article?page=${page}`)
+        .then(res => {
+          this.tableData = res.list.map(c => {
+            c.firstTime = filterTime(c.firstTime, 'yyyy-MM-dd hh:mm')
+            c.lastTime = filterTime(c.lastTime, 'yyyy-MM-dd hh:mm')
+            return c
+          })
+        })
+    },
     // 搜索框回车事件
     onEntry(val) {
       console.log(val)
