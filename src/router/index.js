@@ -20,6 +20,11 @@ export default new Router({
       meta: { title: '文章管理 | わタし' },
       component: () => import('@/pages/Article.vue')
     }, {
+      path: 'editor/:id',
+      name: 'editor',
+      meta: { title: '编辑 | わタし' },
+      component: () => import('@/pages/Editor.vue')
+    }, {
       path: 'admin',
       name: 'admin',
       meta: { title: '管理员 | わタし' },
