@@ -62,7 +62,9 @@ export default {
 	},
 	methods: {
 		getMd(val, render) {
-			return { val, render }
+      this.$emit('change', val)
+      /* console.log(val)
+			return val */
     },
     // 上传图片
     $imgAdd(pos, $file) {

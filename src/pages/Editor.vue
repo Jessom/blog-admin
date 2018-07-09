@@ -7,7 +7,7 @@
             <!-- 标题 -->
             <el-form-item prop='title'>
               <el-input placeholder="请输入标题" v-model="editorForm.title">
-                <el-select v-model="editorForm.type" slot="prepend">
+                <el-select v-model.number="editorForm.type" slot="prepend">
                   <el-option label="原创" value="1"></el-option>
                   <el-option label="转载" value="2"></el-option>
                   <el-option label="翻译" value="3"></el-option>
@@ -24,7 +24,7 @@
             </el-form-item>
             <!-- 内容 -->
             <el-form-item prop='content'>
-              <v-editor :value='editorForm.content' />
+              <v-editor @change='setContent' :value='editorForm.content' />
             </el-form-item>
             <!-- 置顶 && 推荐 -->
             <el-form-item>
@@ -46,6 +46,7 @@
 
 <script>
 import VEditor from '@/components/VEditor.vue'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -62,11 +63,24 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      uid: state => state.mutations.userInfo.id
+    })
+  },
   methods: {
+    setContent(val) {
+      this.editorForm.content = val
+    },
     submit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$axios.post('/v1/admin', this.editorForm)
+          this.editorForm['author'] = this.uid
+          this.$axios.post('/v1/article', this.editorForm)
+            .then(res => {
+              this.$router.go(-1)
+              this.$message({ type: 'success', message: res.msg })
+            })
         } else {
           return false
         }
