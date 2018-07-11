@@ -18,6 +18,10 @@
       <i class="iconfont icon-wenzhang"></i>
       <span slot="title">文章管理</span>
     </el-menu-item>
+    <el-menu-item index="/types">
+      <i class="iconfont icon-17"></i>
+      <span slot="title">类型管理</span>
+    </el-menu-item>
     <el-menu-item index="/admin">
       <i class="iconfont icon-yonghu-tianchong"></i>
       <span slot="title">管理员</span>

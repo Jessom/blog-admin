@@ -20,10 +20,19 @@ export default new Router({
       meta: { title: '文章管理 | わタし' },
       component: () => import('@/pages/Article.vue')
     }, {
+      path: 'editor',
+      meta: { title: '添加 | わタし' },
+      component: () => import('@/pages/Editor.vue')
+    }, {
       path: 'editor/:id',
       name: 'editor',
       meta: { title: '编辑 | わタし' },
       component: () => import('@/pages/Editor.vue')
+    }, {
+      path: 'types',
+      name: 'types',
+      meta: { title: '类型管理 | わタし' },
+      component: () => import('@/pages/Types.vue')
     }, {
       path: 'admin',
       name: 'admin',

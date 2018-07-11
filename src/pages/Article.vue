@@ -53,18 +53,17 @@
               label="操作"
               width="120">
               <template slot-scope="scope">
-                <el-button type="text" size="small">删除</el-button>
-                <el-button type="text" size="small">编辑</el-button>
+                <el-button type="text" size="small" @click='deleteOne(scope.row)'>删除</el-button>
+                <!-- <el-button type="text" size="small" @click='editorOne(scope.row)'>编辑</el-button> -->
+                <el-button type="text" size="small" @click='$router.push({ path: `/editor/${scope.row._id}`, params: scope.row })'>编辑</el-button>
               </template>
             </el-table-column>
           </el-table>
         </slide-com>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+      <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
         <slide-com title='操作'>
-          <hand-com
-            :date='date'
-            :btns='btns' />
+          <hand-com :btns='btns' :showDate='false' />
         </slide-com>
         <slide-com class="mt10" title='统计'>
           <count-item :list='count' @click='countClick' />
@@ -92,33 +91,20 @@ export default {
         value: 13,
         unit: '篇'
       }],
-      date: '',
       btns: [{
-        label: '添加',
+        label: '添加新文章',
         type: 'primary',
-        event: () => console.log('添加')
-      }, {
-        label: '启用',
-        type: 'success',
-        event: () => console.log('启用')
-      }, {
-        label: '禁用',
-        type: 'warning',
-        event: () => console.log('禁用')
-      }, {
-        label: '删除',
-        type: 'danger',
-        event: () => console.log('删除')
+        event: () => this.$router.push({ path: '/editor' })
       }],
       tableData: []
     }
   },
-  created () {
+  activated () {
     this.getData(0)
   },
   methods: {
     getData(page) {
-      this.$axios.get(`/v1/article?page=${page}`)
+      this.$axios.get(`/v1/articles?page=${page}`)
         .then(res => {
           this.tableData = res.list.map(c => {
             c.firstTime = filterTime(c.firstTime, 'yyyy-MM-dd hh:mm')
@@ -134,6 +120,24 @@ export default {
     // 右侧统计点击某一项
     countClick(item) {
       console.log(item)
+    },
+    // 删除某条
+    deleteOne(item) {
+      console.log(item)
+      this.$confirm(`确定要删除该数据？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: item.status ? 'warning' : 'success'
+      }).then(() => {
+        return this.$axios.delete(`/v1/article/${item._id}`)
+      }).then(res => {
+        this.tableData.splice(this.tableData.findIndex(c => c.id === item._id), 1)
+        this.$message({ type: 'success', message: res.msg })
+      })
+    },
+    // 编辑
+    editorOne(item) {
+      this.$router.push({ path: `/editor/${item._id}`, params: item })
     }
   }
 }
