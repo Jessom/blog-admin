@@ -21,7 +21,7 @@
             </el-table-column>
             <el-table-column
               label="添加时间"
-              prop="lastTime">
+              prop="firstTime">
             </el-table-column>
             <el-table-column
               label="操作"
@@ -45,20 +45,45 @@
         </slide-com>
       </el-col>
     </el-row>
+
+    <el-dialog title="添加类型" width='300px' :visible.sync="dialog">
+      <el-form ref="typeForm" :model="typeForm">
+        <el-form-item
+          :rules='[{ required: true, message: "请输入类型名", trigger: "blur" }]'
+          prop='name'>
+          <el-input
+            prefix-icon='iconfont icon-17'
+            v-model="typeForm.name"
+            placeholder='请输入类型名'
+            autofocus="true"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click='addType("typeForm")'>确定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { filterTime } from '@/utils/filter'
 export default {
   data () {
     return {
       types: [],
+      typeForm: {
+        name: ''
+      },
+      dialog: false,
       btns: [{
         label: '添加类型',
         type: 'primary',
-        event: () => console.log('51')
+        event: () => this.dialog = true
       }]
     }
+  },
+  activated () {
+    this.getData()
   },
   methods: {
     // 启用 / 禁用
@@ -68,6 +93,31 @@ export default {
     // 删除
     del(item) {
       console.log(item)
+    },
+    // 添加类型
+    addType(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$axios.post(`/v1/type`, this.typeForm)
+            .then(res => {
+              this.$message({ message: res.msg, type: 'success' })
+              this.types.unshift(res)
+              this.dialog = false
+            })
+        } else {
+          return false
+        }
+      })
+    },
+    // 获取类型
+    getData() {
+      this.$axios.get('/v1/type')
+        .then(res => {
+          this.types = res.data.map(c => {
+            c['firstTime'] = filterTime(c['firstTime'])
+            return c
+          })
+        })
     }
   }
 }
