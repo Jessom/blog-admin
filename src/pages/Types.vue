@@ -88,7 +88,17 @@ export default {
   methods: {
     // 启用 / 禁用
     able(item) {
-      console.log(item)
+      let tip = item.status ? '禁用' : '启用'
+      this.$confirm(`您将${tip}该类型，是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return this.$axios.put(`/v1/type`, { id: item._id, status: !item.status })
+      }).then(res => {
+        item.status = !item.status
+        this.$message({ type: 'success', message: res.msg })
+      })
     },
     // 删除
     del(item) {
