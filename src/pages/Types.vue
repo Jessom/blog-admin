@@ -2,7 +2,7 @@
   <div class="types-wrap">
     <el-row :gutter='12'>
       <el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18">
-        <slide-com title='管理员'>
+        <slide-com title='类型管理'>
           <el-table
             :data="types"
             style="width: 100%">
@@ -102,7 +102,16 @@ export default {
     },
     // 删除
     del(item) {
-      console.log(item)
+      this.$confirm('此操作将永久删除该类型, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'error'
+      }).then(() => {
+        return this.$axios.delete(`/v1/type/${item._id}`)
+      }).then(res => {
+        this.types.splice(this.types.findIndex(c => c.id === item._id), 1)
+        this.$message({ type: 'success', message: '删除成功!' })
+      })
     },
     // 添加类型
     addType(formName) {

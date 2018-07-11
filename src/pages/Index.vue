@@ -2,7 +2,7 @@
   <div class="container">
     <topbar />
     <slide-right /><div class="router-wrap" :class='{"collapse": !slideRightCollapse}'>
-      <navbar />
+      <!-- <navbar /> -->
       <el-collapse-transition>
         <keep-alive>
           <router-view></router-view>
